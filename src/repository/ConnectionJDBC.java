@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ConnectionJDBC<stmt> {
+public class ConnectionJDBC {
     static Connection connection = null;
     static final String userName = "root";
     static final String password = "1234";
@@ -31,7 +31,6 @@ public class ConnectionJDBC<stmt> {
         return connection;
     }
 
-
     public static void close(Connection connection) {
         if (connection != null) {
             try {
@@ -41,7 +40,6 @@ public class ConnectionJDBC<stmt> {
             }
         }
     }
-
 
     public static void close(Statement stmt) {
         if (stmt != null) {

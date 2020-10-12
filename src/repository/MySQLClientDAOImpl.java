@@ -11,12 +11,9 @@ public class MySQLClientDAOImpl implements ClientDAO {
 
     @Override
     public void add(Client client) {
-
         String insertClient = "INSERT INTO clients (first_name, last_name, birth_date) VALUES (?, ?, ?)";
-        //connection = conn.getConnection();
         Connection connection = null;
         Statement statement = null;
-
         try {
             connection = ConnectionJDBC.getConnection();
             statement = connection.createStatement();
@@ -41,9 +38,7 @@ public class MySQLClientDAOImpl implements ClientDAO {
     public Client findClientById(int id){
         Connection connection = null;
         Statement statement = null;
-
         String clientById = "SELECT first_name, last_name, birth_date FROM clients WHERE id = ?";
-
         try {
             connection = ConnectionJDBC.getConnection();
             statement = connection.createStatement();

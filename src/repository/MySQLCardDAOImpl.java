@@ -10,7 +10,6 @@ public class MySQLCardDAOImpl implements CardDAO{
         String insertCard = "INSERT INTO cards (card_number, expiry_date, client_id) VALUES (?, ?, ?)";
         Connection connection = null;
         Statement statement = null;
-
         try {
             connection = ConnectionJDBC.getConnection();
             statement = connection.createStatement();

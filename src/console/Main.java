@@ -19,8 +19,6 @@ public class Main {
     private static ClientService clients;
     private static CardDAO cardsRep;
     private static CardService cards;
-    //private static Connection connection;
-    //private ClientDAO clientRep;
 
     public static void main(String[] args) throws Exception {
         clientsRep = new MySQLClientDAOImpl();

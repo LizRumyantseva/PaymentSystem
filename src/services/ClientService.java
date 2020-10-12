@@ -3,6 +3,6 @@ package services;
 import domain.Client;
 
 public interface ClientService {
-    public void add(Client client);
-    public Client findClientById(int id);
+    void add(Client client);
+    Client findClientById(int id);
 }
