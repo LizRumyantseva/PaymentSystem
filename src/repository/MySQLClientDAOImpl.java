@@ -57,4 +57,26 @@ public class MySQLClientDAOImpl implements ClientDAO {
         }
         return null;
     }
+
+    @Override
+    public void delete(Integer id) {
+        String deleteClient = "DELETE FROM clients WHERE id = ?";
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            connection = ConnectionJDBC.getConnection();
+            statement = connection.createStatement();
+            PreparedStatement stDeleteClient = connection.prepareStatement(deleteClient);
+            stDeleteClient.setInt(1, id);
+            int i = stDeleteClient.executeUpdate();
+            System.out.println(i +" client(s) with their cards was successfully deleted.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //throw new RuntimeException(e);
+        }
+        finally {
+            ConnectionJDBC.close(statement);
+            ConnectionJDBC.close(connection);
+        }
+    }
 }

@@ -20,7 +20,7 @@ public class Main {
     private static CardDAO cardsRep;
     private static CardService cards;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)  {
         clientsRep = new MySQLClientDAOImpl();
         clients = new ClientServiceImpl(clientsRep);
 

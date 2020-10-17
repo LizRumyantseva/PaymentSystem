@@ -15,4 +15,9 @@ public class CardServiceImpl implements CardService {
     public void add(Card card) {
         cardRep.add(card);
     }
+
+    @Override
+    public void delete(String card_number) {
+        cardRep.delete(card_number);
+    }
 }

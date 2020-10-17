@@ -3,12 +3,12 @@ package domain;
 import java.util.Date;
 
 public class Card {
-    private int number;
+    private String number;
     private double balance;
     private int clientId;
     private Date expDate;
 
-    public Card(int number, Date expDate, int clientId) {
+    public Card(String number, Date expDate, int clientId) {
         this.number = number;
         this.clientId = clientId;
         this.expDate = expDate;
@@ -18,7 +18,7 @@ public class Card {
         return balance;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
@@ -34,7 +34,7 @@ public class Card {
         this.balance = balance;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

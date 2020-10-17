@@ -17,6 +17,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public void delete(int card_number) {
+        clientRep.delete(card_number);
+    }
+
+    @Override
     public Client findClientById(int id) {
         return clientRep.findClientById(id);
     }

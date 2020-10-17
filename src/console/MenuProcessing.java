@@ -23,6 +23,8 @@ public class MenuProcessing {
         System.out.println(" 0 - Exit menu");
         System.out.println(" 1 - Add a client");
         System.out.println(" 2 - Add a card to the client");
+        System.out.println(" 3 - Delete a card by its number");
+        System.out.println(" 4 - Delete a client by its id");
     }
 
     static int chooseMode(Scanner scan, String message, int minPossibleMode, int maxPossibleMode) {
@@ -54,9 +56,11 @@ public class MenuProcessing {
         int chosenMode = -1;
         while (chosenMode != 0) {
             printMainMenu();
-            chosenMode = chooseMode(scan, "Input mode 0 - 2: ", 0, 2);
+            chosenMode = chooseMode(scan, "Input mode 0 - 4: ", 0, 4);
+
             switch (chosenMode) {
                 case 0:
+                    scan.close();
                     exitMainMenu();
                 case 1: {
                     try {
@@ -74,37 +78,79 @@ public class MenuProcessing {
                         Client newClient = new Client(fname, lname, y);
                         clients.add(newClient);
                         System.out.println("");
-                        break;
-                    }
-                    catch (ParseException e) {
-                        //throw new Exception("Введите дату в правильном формате!");
+                    } catch (ParseException e) {
                         System.err.println("Введите дату в правильном формате!");
                     }
+                    break;
                 }
                 case 2: {
                     try {
                         System.out.println("");
                         System.out.println("Adding a new card to the client...");
                         System.out.print(" Input client id: ");
-                        int clientId = scan.nextInt();
+                        int clientId = 0;
+                        if (scan.hasNextInt()) {
+                            clientId = scan.nextInt();
+                        } else {
+                            System.out.println("введите корректный ид");
+                            scan.next();
+                            break;
+                        }
                         Client foundedClient = clients.findClientById(clientId);
                         if (foundedClient != null) {
                             System.out.print(" Input card number: ");
-                            int number = scan.nextInt();
-                            System.out.print(" Input expiry date: ");
-                            String expiryDate = scan.next();
-                            SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
-                            Date y = s.parse(expiryDate);
+                            String number = scan.next();
+                            boolean isNumeric = number.chars().allMatch( Character::isDigit );
+                            if (isNumeric) {
+                                System.out.print(" Input expiry date: ");
+                                String expiryDate = scan.next();
+                                SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+                                Date y = s.parse(expiryDate);
 
-                            Card newCard = new Card(number, y, clientId);
-                            cards.add(newCard);
-                            System.out.println("");
+                                Card newCard = new Card(number, y, clientId);
+                                cards.add(newCard);
+                                System.out.println("");
+                            }else {
+                                System.out.println("Номер карты должен состоять из цифр");
+                                break;
+                            }
                         }
-                        break;
                     } catch (ParseException e) {
-                        //throw new Exception("Введите дату в правильном формате!");
                         System.err.println("Введите дату в правильном формате!");
                     }
+                    break;
+                }
+                case 3: {
+                    System.out.println("");
+                    System.out.println("Deleting a card by its number...");
+                    System.out.print(" Input card number: ");
+                    String card_number = scan.next();
+                    boolean isNumeric = card_number.chars().allMatch( Character::isDigit );
+                    if (isNumeric) {
+                        cards.delete(card_number);
+                        System.out.println("");
+                    }else {
+                        System.out.println("введите корректный ид");
+                        //scan.next();
+                        break;
+                    }
+                    break;
+                }
+                case 4: {
+                    System.out.println("");
+                    System.out.println("Deleting a client by its id...");
+                    System.out.print(" Input client id: ");
+                    int client_id=0;
+                    if (scan.hasNextInt()) {
+                        client_id = scan.nextInt();
+                    } else {
+                        System.out.println("введите корректный ид клиента");
+                        scan.next();
+                        break;
+                    }
+                    clients.delete(client_id);
+                    System.out.println("");
+                    break;
                 }
             }
             printPressEnterMessage();
