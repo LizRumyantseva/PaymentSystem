@@ -11,9 +11,6 @@ import services.ClientService;
 import services.ClientServiceImpl;
 
 
-//import java.sql.Connection;
-
-
 public class Main {
     private static ClientDAO clientsRep;
     private static ClientService clients;

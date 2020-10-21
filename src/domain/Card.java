@@ -6,9 +6,18 @@ public class Card {
     private String number;
     private double balance;
     private int clientId;
+    private int id;
     private Date expDate;
 
     public Card(String number, Date expDate, int clientId) {
+        this.number = number;
+        this.clientId = clientId;
+        this.expDate = expDate;
+    }
+
+    public Card(int id, String number, Date expDate, double balance, int clientId) {
+        this.id = id;
+        this.balance = balance;
         this.number = number;
         this.clientId = clientId;
         this.expDate = expDate;
@@ -57,8 +66,11 @@ public class Card {
     @Override
     public String toString() {
         return "Card{" +
+                "id=" + id +
                 ", number=" + number +
                 ", balance=" + balance +
+                ", expiry date=" + expDate +
+                ", client id=" + clientId +
                 '}';
     }
 }

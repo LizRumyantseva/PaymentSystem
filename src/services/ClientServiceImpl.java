@@ -1,7 +1,10 @@
 package services;
 
+import domain.Card;
 import domain.Client;
 import repository.ClientDAO;
+
+import java.util.List;
 
 public class ClientServiceImpl implements ClientService {
 
@@ -24,5 +27,13 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client findClientById(int id) {
         return clientRep.findClientById(id);
+    }
+
+    @Override
+    public List<Client> getAll() { return clientRep.getAll(); }
+
+    @Override
+    public List<Card> getClientCards(int id) {
+        return clientRep.getClientCards(id);
     }
 }

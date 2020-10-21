@@ -7,8 +7,16 @@ public class Client {
     private String fname;
     private String lname;
     private Date bdate;
+    private int id;
 
     public Client(String fname, String lname, Date bdate) {
+        this.fname = fname;
+        this.lname = lname;
+        this.bdate = bdate;
+    }
+
+    public Client(int id, String fname, String lname, Date bdate) {
+        this.id = id;
         this.fname = fname;
         this.lname = lname;
         this.bdate = bdate;
@@ -34,7 +42,9 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                ", name='" + fname + '\'' +
+                "name='" + fname + '\'' +
+                ",last name='" + lname + '\'' +
+                ",birth date='" + bdate + '\'' +
                 '}';
     }
 }

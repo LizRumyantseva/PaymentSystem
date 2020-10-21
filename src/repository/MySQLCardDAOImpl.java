@@ -1,9 +1,14 @@
 package repository;
 
 import domain.Card;
-import java.sql.*;
+import domain.Client;
 
-public class MySQLCardDAOImpl implements CardDAO{
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MySQLCardDAOImpl implements CardDAO {
 
     @Override
     public void add(Card card) {
@@ -20,13 +25,12 @@ public class MySQLCardDAOImpl implements CardDAO{
             stInsertCard.executeUpdate();
             System.out.println("Card was successfully added.");
             //System.out.println("данные добавлены");
-        } catch(SQLIntegrityConstraintViolationException e){
+        } catch (SQLIntegrityConstraintViolationException e) {
             System.err.println("Невозможно присвоить клиенту уже имеющийся номер карты");
         } catch (SQLException e) {
             e.printStackTrace();
             //throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             ConnectionJDBC.close(statement);
             ConnectionJDBC.close(connection);
         }
@@ -43,12 +47,56 @@ public class MySQLCardDAOImpl implements CardDAO{
             PreparedStatement stDeleteCard = connection.prepareStatement(deleteCard);
             stDeleteCard.setString(1, card_number);
             int i = stDeleteCard.executeUpdate();
-            System.out.println(i +" cards was successfully deleted.");
+            System.out.println(i + " cards was successfully deleted.");
         } catch (SQLException e) {
             e.printStackTrace();
             //throw new RuntimeException(e);
+        } finally {
+            ConnectionJDBC.close(statement);
+            ConnectionJDBC.close(connection);
         }
-        finally {
+    }
+
+    @Override
+    public List<Card> getAll() {
+        Connection connection = null;
+        Statement statement = null;
+        String findCard = "SELECT * FROM cards";
+        try {
+            connection = ConnectionJDBC.getConnection();
+            statement = connection.createStatement();
+            List<Card> cards = new ArrayList();
+            ResultSet rs = statement.executeQuery(findCard);
+            while (rs.next())
+                cards.add(new Card(rs.getInt("id"), rs.getString("card_number"), rs.getDate("expiry_date"), rs.getDouble("balance"), rs.getInt("client_id")));
+            return cards;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionJDBC.close(statement);
+            ConnectionJDBC.close(connection);
+        }
+        return null;
+    }
+
+    @Override
+    public void receiveMoney(int id, double sum) {
+        Connection connection = null;
+        Statement statement = null;
+        String getClientCards = "UPDATE cards SET balance = ? where id = ?";
+        try {
+            connection = ConnectionJDBC.getConnection();
+            statement = connection.createStatement();
+            PreparedStatement stmt = connection.prepareStatement(getClientCards);
+
+            stmt.setDouble(1, sum);
+            stmt.setInt(2, id);
+            int i = stmt.executeUpdate();
+            System.out.println(i + " cards changed its balance.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             ConnectionJDBC.close(statement);
             ConnectionJDBC.close(connection);
         }
