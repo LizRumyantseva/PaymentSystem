@@ -62,7 +62,6 @@ public class MenuProcessing {
         while (chosenMode != 0) {
             printMainMenu();
             chosenMode = chooseMode(scan, "Input mode 0 - 8: ", 0, 8);
-
             switch (chosenMode) {
                 case 0:
                     scan.close();
@@ -75,7 +74,7 @@ public class MenuProcessing {
                         String fname = scan.next();
                         System.out.print(" Input client last name: ");
                         String lname = scan.next();
-                        System.out.print(" Input birth date: ");
+                        System.out.print(" Input birth date (yyyy-mm-dd): ");
                         String bdate = scan.next();
                         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
                         Date y = s.parse(bdate);
@@ -84,7 +83,7 @@ public class MenuProcessing {
                         clients.add(newClient);
                         System.out.println("");
                     } catch (ParseException e) {
-                        System.err.println("Введите дату в правильном формате!");
+                        System.err.println("Input date in correct format!");
                     }
                     break;
                 }
@@ -97,7 +96,7 @@ public class MenuProcessing {
                         if (scan.hasNextInt()) {
                             clientId = scan.nextInt();
                         } else {
-                            System.out.println("введите корректный ид");
+                            System.out.println("Input correct id!");
                             scan.next();
                             break;
                         }
@@ -107,7 +106,7 @@ public class MenuProcessing {
                             String number = scan.next();
                             boolean isNumeric = number.chars().allMatch(Character::isDigit);
                             if (isNumeric) {
-                                System.out.print(" Input expiry date: ");
+                                System.out.print(" Input expiry date (yyyy-mm-dd): ");
                                 String expiryDate = scan.next();
                                 SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
                                 Date y = s.parse(expiryDate);
@@ -116,12 +115,12 @@ public class MenuProcessing {
                                 cards.add(newCard);
                                 System.out.println("");
                             } else {
-                                System.out.println("Номер карты должен состоять из цифр");
+                                System.out.println("Card number must consists of numbers!");
                                 break;
                             }
                         }
                     } catch (ParseException e) {
-                        System.err.println("Введите дату в правильном формате!");
+                        System.err.println("Input date in correct format");
                     }
                     break;
                 }
@@ -135,7 +134,7 @@ public class MenuProcessing {
                         cards.delete(card_number);
                         System.out.println("");
                     } else {
-                        System.out.println("введите корректный ид");
+                        System.out.println("Input correct id!");
                         //scan.next();
                         break;
                     }
@@ -149,7 +148,7 @@ public class MenuProcessing {
                     if (scan.hasNextInt()) {
                         client_id = scan.nextInt();
                     } else {
-                        System.out.println("введите корректный ид клиента");
+                        System.out.println("Input correct client id!");
                         scan.next();
                         break;
                     }
@@ -179,7 +178,7 @@ public class MenuProcessing {
                     if (scan.hasNextInt()) {
                         client_id = scan.nextInt();
                     } else {
-                        System.out.println("введите корректный ид клиента");
+                        System.out.println("Input correct client id!");
                         scan.next();
                         break;
                     }
@@ -195,7 +194,7 @@ public class MenuProcessing {
                     if (scan.hasNextInt()) {
                         card_id = scan.nextInt();
                     } else {
-                        System.out.println("введите корректный ид карты");
+                        System.out.println("Input correct card id!");
                         scan.next();
                         break;
                     }
@@ -204,7 +203,7 @@ public class MenuProcessing {
                     if (scan.hasNextDouble()) {
                         sum = scan.nextDouble();
                     } else {
-                        System.out.println("введите корректную сумму операции");
+                        System.out.println("Input correct transaction sum!");
                         scan.next();
                         break;
                     }

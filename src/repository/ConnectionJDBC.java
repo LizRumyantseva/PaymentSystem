@@ -22,10 +22,8 @@ public class ConnectionJDBC {
             try {
                 Connection connection = DriverManager.getConnection(connectionURL, userName, password);
                 return connection;
-            } catch (SQLException e) {
-                //e.printStackTrace();
-                throw new RuntimeException("Не удалось установить соединение с БД!");
-
+            } catch (SQLException | NullPointerException e) {
+                System.err.println("Connection failed.");
             }
         }
         return connection;
@@ -46,10 +44,8 @@ public class ConnectionJDBC {
             try {
                 stmt.close();
             } catch (SQLException e) {
-                // e.printStackTrace();
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
-
 }

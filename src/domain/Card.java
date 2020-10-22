@@ -65,7 +65,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
+        return "Card {" +
                 "id=" + id +
                 ", number=" + number +
                 ", balance=" + balance +

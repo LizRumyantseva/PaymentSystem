@@ -2,6 +2,7 @@ package repository;
 
 import domain.Card;
 import domain.Client;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -28,7 +29,6 @@ public class MySQLClientDAOImpl implements ClientDAO {
             System.out.println("Client was successfully added.");
         } catch (SQLException e) {
             e.printStackTrace();
-            //throw new RuntimeException(e);
         } finally {
             ConnectionJDBC.close(statement);
             ConnectionJDBC.close(connection);
@@ -36,7 +36,7 @@ public class MySQLClientDAOImpl implements ClientDAO {
     }
 
     @Override
-    public Client findClientById(int id){
+    public Client findClientById(int id) {
         Connection connection = null;
         Statement statement = null;
         String clientById = "SELECT first_name, last_name, birth_date FROM clients WHERE id = ?";
@@ -44,11 +44,10 @@ public class MySQLClientDAOImpl implements ClientDAO {
             connection = ConnectionJDBC.getConnection();
             statement = connection.createStatement();
             PreparedStatement stmt = connection.prepareStatement(clientById);
-
             stmt.setInt(1, id);
             ResultSet resSet = stmt.executeQuery();
-            if (resSet.next()){
-                return new Client(resSet.getString("first_name"),resSet.getString("last_name"),resSet.getDate("birth_date"));
+            if (resSet.next()) {
+                return new Client(resSet.getString("first_name"), resSet.getString("last_name"), resSet.getDate("birth_date"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,24 +60,24 @@ public class MySQLClientDAOImpl implements ClientDAO {
 
     @Override
     public List<Client> getAll() {
-            Connection connection = null;
-            Statement statement = null;
-            String findClient = "SELECT * FROM clients";
-            try {
-                connection = ConnectionJDBC.getConnection();
-                statement = connection.createStatement();
-                List<Client> clients = new ArrayList();
-                ResultSet rs = statement.executeQuery(findClient);
-                while (rs.next())
-                    clients.add(new Client(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getDate("birth_date")));
-                return clients;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                ConnectionJDBC.close(statement);
-                ConnectionJDBC.close(connection);
-            }
-            return null;
+        Connection connection = null;
+        Statement statement = null;
+        String findClient = "SELECT * FROM clients";
+        try {
+            connection = ConnectionJDBC.getConnection();
+            statement = connection.createStatement();
+            List<Client> clients = new ArrayList();
+            ResultSet rs = statement.executeQuery(findClient);
+            while (rs.next())
+                clients.add(new Client(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getDate("birth_date")));
+            return clients;
+        } catch (SQLException | NullPointerException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionJDBC.close(statement);
+            ConnectionJDBC.close(connection);
+        }
+        return null;
     }
 
     @Override
@@ -96,7 +95,7 @@ public class MySQLClientDAOImpl implements ClientDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
                 cards.add(new Card(rs.getInt("id"), rs.getString("card_number"), rs.getDate("expiry_date"), rs.getDouble("balance"), rs.getInt("client_id")));
-                return cards;
+            return cards;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,7 +105,6 @@ public class MySQLClientDAOImpl implements ClientDAO {
         }
         return null;
     }
-
 
     @Override
     public void delete(Integer id) {
@@ -119,12 +117,10 @@ public class MySQLClientDAOImpl implements ClientDAO {
             PreparedStatement stDeleteClient = connection.prepareStatement(deleteClient);
             stDeleteClient.setInt(1, id);
             int i = stDeleteClient.executeUpdate();
-            System.out.println(i +" client(s) with their cards was successfully deleted.");
+            System.out.println(i + " client(s) with their cards was successfully deleted.");
         } catch (SQLException e) {
             e.printStackTrace();
-            //throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             ConnectionJDBC.close(statement);
             ConnectionJDBC.close(connection);
         }

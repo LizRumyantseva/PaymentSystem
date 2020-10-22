@@ -2,7 +2,6 @@ package repository;
 
 import domain.Card;
 import domain.Client;
-
 import java.util.List;
 
 public interface ClientDAO extends DAOGeneral<Client,Integer> {

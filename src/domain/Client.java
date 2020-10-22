@@ -37,14 +37,13 @@ public class Client {
     public void setFName(String name) {
         this.fname = fname;
     }
-
-
+    
     @Override
     public String toString() {
-        return "Client{" +
+        return "Client {" +
                 "name='" + fname + '\'' +
-                ",last name='" + lname + '\'' +
-                ",birth date='" + bdate + '\'' +
+                ", last name='" + lname + '\'' +
+                ", birth date='" + bdate + '\'' +
                 '}';
     }
 }

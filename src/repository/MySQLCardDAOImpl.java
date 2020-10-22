@@ -24,12 +24,10 @@ public class MySQLCardDAOImpl implements CardDAO {
             stInsertCard.setInt(3, card.getClientId());
             stInsertCard.executeUpdate();
             System.out.println("Card was successfully added.");
-            //System.out.println("данные добавлены");
         } catch (SQLIntegrityConstraintViolationException e) {
-            System.err.println("Невозможно присвоить клиенту уже имеющийся номер карты");
+            System.err.println("Card number already exists in DB!");
         } catch (SQLException e) {
             e.printStackTrace();
-            //throw new RuntimeException(e);
         } finally {
             ConnectionJDBC.close(statement);
             ConnectionJDBC.close(connection);
@@ -50,7 +48,6 @@ public class MySQLCardDAOImpl implements CardDAO {
             System.out.println(i + " cards was successfully deleted.");
         } catch (SQLException e) {
             e.printStackTrace();
-            //throw new RuntimeException(e);
         } finally {
             ConnectionJDBC.close(statement);
             ConnectionJDBC.close(connection);
@@ -88,12 +85,10 @@ public class MySQLCardDAOImpl implements CardDAO {
             connection = ConnectionJDBC.getConnection();
             statement = connection.createStatement();
             PreparedStatement stmt = connection.prepareStatement(getClientCards);
-
             stmt.setDouble(1, sum);
             stmt.setInt(2, id);
             int i = stmt.executeUpdate();
             System.out.println(i + " cards changed its balance.");
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

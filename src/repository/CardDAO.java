@@ -1,7 +1,6 @@
 package repository;
 
 import domain.Card;
-
 import java.util.List;
 
 public interface CardDAO extends DAOGeneral<Card,String> {
